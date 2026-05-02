@@ -2,248 +2,495 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
+  :root {
+    --bg:        #131316;
+    --surface:   #1c1c21;
+    --surface2:  #242429;
+    --border:    rgba(255,255,255,0.07);
+    --border2:   rgba(255,255,255,0.12);
+    --purple:    #7B61FF;
+    --purple2:   #9D87FF;
+    --blue:      #3B82F6;
+    --text1:     #f0f0f5;
+    --text2:     #8b8b99;
+    --text3:     #55555f;
+  }
+
   body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Inter', -apple-system, sans-serif;
     font-size: 12px;
-    background: #2c2c2c;
-    color: #e0e0e0;
-    padding: 12px;
-    user-select: none;
+    background: var(--bg);
+    color: var(--text1);
+    overflow-x: hidden;
   }
 
-  .badge {
-    display: inline-flex;
+  /* ── Header ── */
+  .header {
+    position: relative;
+    padding: 14px 14px 0;
+    overflow: hidden;
+  }
+  .header-glow {
+    position: absolute;
+    top: -40px; left: 50%;
+    transform: translateX(-50%);
+    width: 260px; height: 100px;
+    background: radial-gradient(ellipse, rgba(123,97,255,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-top {
+    display: flex;
     align-items: center;
-    gap: 6px;
-    background: #3a3a3a;
-    border: 1px solid #444;
-    border-radius: 6px;
-    padding: 6px 10px;
-    margin-bottom: 12px;
-    width: 100%;
-    font-size: 11px;
-    color: #aaa;
+    justify-content: space-between;
+    margin-bottom: 14px;
   }
-  .badge span { color: #a78bfa; font-weight: 600; }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .logo-icon {
+    width: 28px; height: 28px;
+    background: linear-gradient(135deg, #5b4fcf, #7B61FF);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 12px rgba(123,97,255,0.35);
+  }
+  .logo-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text1);
+    letter-spacing: -0.3px;
+  }
+  .logo-name span { color: var(--purple2); }
 
+  .sel-badge {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text2);
+    transition: all 0.2s;
+  }
+  .sel-badge.has-sel { border-color: rgba(123,97,255,0.4); color: var(--purple2); }
+  .sel-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--text3);
+    transition: background 0.2s;
+  }
+  .sel-badge.has-sel .sel-dot { background: var(--purple); box-shadow: 0 0 6px var(--purple); }
+
+  /* ── Divider ── */
+  .divider { height: 1px; background: var(--border); margin: 0 14px; }
+
+  /* ── Tabs ── */
+  .tabs-wrap { padding: 10px 14px; }
   .tabs {
     display: flex;
-    background: #1e1e1e;
-    border-radius: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
     padding: 3px;
-    margin-bottom: 14px;
     gap: 2px;
+    position: relative;
   }
   .tab {
     flex: 1;
-    padding: 6px 4px;
+    padding: 7px 6px;
     border: none;
     background: transparent;
-    color: #888;
-    border-radius: 6px;
+    color: var(--text3);
+    border-radius: 8px;
     cursor: pointer;
     font-size: 11px;
-    font-weight: 500;
-    transition: all 0.15s;
+    font-weight: 600;
+    letter-spacing: 0.1px;
+    transition: color 0.2s;
+    position: relative;
+    z-index: 1;
   }
-  .tab.active {
-    background: #3d2fa0;
-    color: #fff;
+  .tab:hover { color: var(--text2); }
+  .tab.active { color: #fff; }
+  .tab-slider {
+    position: absolute;
+    top: 3px; bottom: 3px;
+    background: linear-gradient(135deg, #5340c4, #7B61FF);
+    border-radius: 7px;
+    box-shadow: 0 2px 12px rgba(123,97,255,0.4);
+    transition: left 0.22s cubic-bezier(0.4,0,0.2,1), width 0.22s cubic-bezier(0.4,0,0.2,1);
+    pointer-events: none;
   }
 
-  .panel { display: none; }
+  /* ── Panel ── */
+  .panel { display: none; padding: 0 14px; }
   .panel.active { display: block; }
 
-  label {
-    display: block;
-    font-size: 11px;
-    color: #888;
-    margin-bottom: 4px;
-    margin-top: 10px;
+  /* ── Info Banner ── */
+  .info {
+    display: flex;
+    gap: 9px;
+    background: rgba(59,130,246,0.08);
+    border: 1px solid rgba(59,130,246,0.18);
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-bottom: 14px;
   }
-  label:first-child { margin-top: 0; }
+  .info-icon { flex-shrink: 0; opacity: 0.8; margin-top: 1px; }
+  .info-body { }
+  .info-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: #93c5fd;
+    margin-bottom: 3px;
+  }
+  .info-desc {
+    font-size: 11px;
+    color: #6090c0;
+    line-height: 1.55;
+  }
+  .info-eg {
+    display: inline-block;
+    margin-top: 5px;
+    background: rgba(59,130,246,0.1);
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 10px;
+    color: #5580aa;
+    font-style: italic;
+  }
 
+  /* ── Form ── */
+  .field { margin-bottom: 10px; }
+  .field-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 5px;
+  }
+  .input-wrap { position: relative; }
   input[type="text"], input[type="number"] {
     width: 100%;
-    padding: 7px 10px;
-    background: #1e1e1e;
-    border: 1px solid #444;
-    border-radius: 6px;
-    color: #e0e0e0;
+    padding: 8px 12px;
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    color: var(--text1);
     font-size: 12px;
+    font-family: inherit;
     outline: none;
-    transition: border 0.15s;
+    transition: border-color 0.15s, box-shadow 0.15s;
   }
-  input:focus { border-color: #7c6ff7; }
-
+  input::placeholder { color: var(--text3); }
+  input:focus {
+    border-color: var(--purple);
+    box-shadow: 0 0 0 3px rgba(123,97,255,0.15);
+  }
   .row { display: flex; gap: 8px; }
-  .row input { flex: 1; }
+  .row .field { flex: 1; }
 
-  .checkbox-row {
+  .check-row {
     display: flex;
     align-items: center;
-    gap: 6px;
-    margin-top: 10px;
+    gap: 8px;
+    margin-bottom: 12px;
+    cursor: pointer;
   }
-  .checkbox-row input[type="checkbox"] { accent-color: #7c6ff7; }
-  .checkbox-row label { margin: 0; color: #aaa; }
+  .check-row input[type="checkbox"] { display: none; }
+  .check-box {
+    width: 16px; height: 16px;
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.15s;
+  }
+  .check-row input:checked ~ .check-box {
+    background: var(--purple);
+    border-color: var(--purple);
+  }
+  .check-mark { display: none; }
+  .check-row input:checked ~ .check-box .check-mark { display: block; }
+  .check-label { font-size: 11px; color: var(--text2); }
 
+  /* ── Button ── */
   .btn {
     display: block;
     width: 100%;
-    padding: 9px;
-    margin-top: 14px;
+    padding: 10px;
     border: none;
-    border-radius: 8px;
-    background: linear-gradient(135deg, #5b4fcf, #7c6ff7);
-    color: white;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #5340c4 0%, #7B61FF 60%, #9D87FF 100%);
+    color: #fff;
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 700;
+    font-family: inherit;
+    letter-spacing: 0.1px;
     cursor: pointer;
-    transition: opacity 0.15s, transform 0.1s;
+    box-shadow: 0 4px 16px rgba(123,97,255,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
+    transition: transform 0.12s, box-shadow 0.12s, opacity 0.12s;
+    margin-bottom: 14px;
   }
-  .btn:hover { opacity: 0.9; }
-  .btn:active { transform: scale(0.98); }
+  .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(123,97,255,0.45), inset 0 1px 0 rgba(255,255,255,0.15);
+  }
+  .btn:active { transform: scale(0.98); opacity: 0.9; }
 
-  .preview {
-    margin-top: 12px;
-    background: #1a1a1a;
-    border: 1px solid #333;
-    border-radius: 6px;
-    padding: 8px;
-    max-height: 90px;
+  /* ── Preview ── */
+  .preview-wrap {
+    margin: 0 14px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .preview-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .preview-title {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--text3);
+  }
+  .preview-count {
+    font-size: 10px;
+    color: var(--text3);
+    background: var(--surface2);
+    border-radius: 10px;
+    padding: 2px 7px;
+  }
+  .preview-list {
+    padding: 6px 4px;
+    max-height: 78px;
     overflow-y: auto;
   }
-  .preview-title { font-size: 10px; color: #666; margin-bottom: 4px; }
+  .preview-list::-webkit-scrollbar { width: 3px; }
+  .preview-list::-webkit-scrollbar-track { background: transparent; }
+  .preview-list::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 2px; }
   .preview-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: background 0.1s;
+  }
+  .preview-item:hover { background: var(--surface2); }
+  .preview-item-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--purple);
+    opacity: 0.5;
+    flex-shrink: 0;
+  }
+  .preview-item-name {
     font-size: 11px;
-    color: #aaa;
-    padding: 2px 0;
+    color: var(--text2);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .preview-item::before { content: "▸ "; color: #5b4fcf; }
-  .empty { color: #555; font-style: italic; font-size: 11px; text-align: center; padding: 8px; }
-
-  .info {
-    display: flex;
-    gap: 8px;
-    background: #1a2340;
-    border: 1px solid #2a3a6a;
-    border-radius: 8px;
-    padding: 9px 10px;
-    margin-bottom: 12px;
+  .preview-empty {
+    text-align: center;
+    padding: 16px;
+    color: var(--text3);
+    font-size: 11px;
   }
-  .info-icon { flex-shrink: 0; margin-top: 1px; }
-  .info-text { font-size: 11px; color: #8ab0f0; line-height: 1.6; }
-  .info-text strong { color: #a8c8ff; display: block; margin-bottom: 2px; }
-  .info-example { color: #6080b0; font-size: 10px; margin-top: 4px; }
+  .preview-more {
+    font-size: 10px;
+    color: var(--text3);
+    padding: 3px 8px;
+    font-style: italic;
+  }
 </style>
 </head>
 <body>
 
-<div class="badge">
-  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-  <span id="sel-count">0</span> layers selected
-</div>
-
-<div class="tabs">
-  <button class="tab active" onclick="switchTab('fr')">Find & Swap</button>
-  <button class="tab" onclick="switchTab('ps')">Add to Name</button>
-  <button class="tab" onclick="switchTab('an')">Number Layers</button>
-</div>
-
-<!-- Find & Replace -->
-<div id="panel-fr" class="panel active">
-  <div class="info">
-    <div class="info-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8ab0f0" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
-    <div class="info-text">
-      <strong>When to use this?</strong>
-      Use when you want to rename many layers at once by swapping a word or phrase.
-      <div class="info-example">e.g. All your layers say "Frame" → replace with "Screen" in one click.</div>
+<!-- Header -->
+<div class="header">
+  <div class="header-glow"></div>
+  <div class="header-top">
+    <div class="logo">
+      <div class="logo-icon">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M4 6h16M4 12h10M4 18h6"/></svg>
+      </div>
+      <div class="logo-name">Layer <span>Renamer</span></div>
+    </div>
+    <div class="sel-badge" id="sel-badge">
+      <div class="sel-dot"></div>
+      <span id="sel-count">0</span> selected
     </div>
   </div>
-  <label>Find</label>
-  <input type="text" id="fr-find" placeholder="e.g. Frame" />
-  <label>Replace with</label>
-  <input type="text" id="fr-replace" placeholder="e.g. Section" />
-  <div class="checkbox-row">
-    <input type="checkbox" id="fr-case" />
-    <label for="fr-case">Case sensitive</label>
+</div>
+
+<div class="divider"></div>
+
+<!-- Tabs -->
+<div class="tabs-wrap">
+  <div class="tabs" id="tabs">
+    <div class="tab-slider" id="tab-slider"></div>
+    <button class="tab active" onclick="switchTab('fr', 0)">Find & Swap</button>
+    <button class="tab" onclick="switchTab('ps', 1)">Add to Name</button>
+    <button class="tab" onclick="switchTab('an', 2)">Number Layers</button>
   </div>
+</div>
+
+<!-- Find & Swap -->
+<div id="panel-fr" class="panel active">
+  <div class="info">
+    <div class="info-icon">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#60a0e0" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><circle cx="12" cy="16" r="0.5" fill="#60a0e0"/></svg>
+    </div>
+    <div class="info-body">
+      <div class="info-title">When to use this?</div>
+      <div class="info-desc">Swap a word across many layer names at once — no clicking one by one.</div>
+      <span class="info-eg">"Frame" → "Screen" across 50 layers in one click</span>
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="field-label">Find</div>
+    <input type="text" id="fr-find" placeholder="e.g.  Frame" />
+  </div>
+  <div class="field">
+    <div class="field-label">Swap with</div>
+    <input type="text" id="fr-replace" placeholder="e.g.  Screen" />
+  </div>
+  <label class="check-row">
+    <input type="checkbox" id="fr-case" />
+    <div class="check-box">
+      <svg class="check-mark" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><polyline points="2,6 5,9 10,3"/></svg>
+    </div>
+    <span class="check-label">Case sensitive</span>
+  </label>
   <button class="btn" onclick="doFindReplace()">Swap Names</button>
 </div>
 
-<!-- Prefix / Suffix -->
+<!-- Add to Name -->
 <div id="panel-ps" class="panel">
   <div class="info">
-    <div class="info-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8ab0f0" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
-    <div class="info-text">
-      <strong>When to use this?</strong>
-      Use when you want to add the same text to the start or end of multiple layer names.
-      <div class="info-example">e.g. Add prefix "icon/" → "home" becomes "icon/home". Add suffix " v2" → "Button" becomes "Button v2".</div>
+    <div class="info-icon">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#60a0e0" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><circle cx="12" cy="16" r="0.5" fill="#60a0e0"/></svg>
+    </div>
+    <div class="info-body">
+      <div class="info-title">When to use this?</div>
+      <div class="info-desc">Add the same text to the start or end of all selected layer names.</div>
+      <span class="info-eg">prefix "icon/" → "home" becomes "icon/home"</span>
     </div>
   </div>
-  <label>Add Prefix</label>
-  <input type="text" id="ps-prefix" placeholder="e.g. icon/" />
-  <label>Add Suffix</label>
-  <input type="text" id="ps-suffix" placeholder="e.g. _v2" />
-  <button class="btn" onclick="doPrefixSuffix()">Add to Name</button>
+
+  <div class="field">
+    <div class="field-label">Add Before (Prefix)</div>
+    <input type="text" id="ps-prefix" placeholder="e.g.  icon/" />
+  </div>
+  <div class="field">
+    <div class="field-label">Add After (Suffix)</div>
+    <input type="text" id="ps-suffix" placeholder="e.g.  _v2" />
+  </div>
+  <button class="btn" onclick="doPrefixSuffix()" style="margin-top:10px">Add to Name</button>
 </div>
 
-<!-- Auto Number -->
+<!-- Number Layers -->
 <div id="panel-an" class="panel">
   <div class="info">
-    <div class="info-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8ab0f0" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
-    <div class="info-text">
-      <strong>When to use this?</strong>
-      Use when you want to give layers a clean numbered sequence automatically.
-      <div class="info-example">e.g. Select 5 frames → they become "Screen 1", "Screen 2", "Screen 3"... instantly.</div>
+    <div class="info-icon">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#60a0e0" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><circle cx="12" cy="16" r="0.5" fill="#60a0e0"/></svg>
+    </div>
+    <div class="info-body">
+      <div class="info-title">When to use this?</div>
+      <div class="info-desc">Instantly give all selected layers a clean numbered sequence.</div>
+      <span class="info-eg">5 frames → "Screen 1", "Screen 2", "Screen 3"...</span>
     </div>
   </div>
-  <label>Base Name</label>
-  <input type="text" id="an-base" placeholder="e.g. Layer" value="Layer" />
-  <label>Separator</label>
-  <input type="text" id="an-sep" placeholder="e.g. space or -" value=" " />
-  <label>Start From</label>
-  <input type="number" id="an-start" value="1" min="0" />
+
+  <div class="row">
+    <div class="field">
+      <div class="field-label">Base Name</div>
+      <input type="text" id="an-base" placeholder="e.g.  Layer" value="Layer" />
+    </div>
+    <div class="field" style="max-width:80px">
+      <div class="field-label">Start At</div>
+      <input type="number" id="an-start" value="1" min="0" />
+    </div>
+  </div>
+  <div class="field">
+    <div class="field-label">Separator</div>
+    <input type="text" id="an-sep" placeholder='e.g.  space, -, _' value=" " />
+  </div>
   <button class="btn" onclick="doAutoNumber()">Number My Layers</button>
 </div>
 
-<!-- Layer Preview -->
-<div class="preview">
-  <div class="preview-title">SELECTED LAYERS</div>
-  <div id="preview-list"><div class="empty">No layers selected</div></div>
+<!-- Preview -->
+<div class="preview-wrap">
+  <div class="preview-header">
+    <div class="preview-title">Selected Layers</div>
+    <div class="preview-count" id="preview-count">0</div>
+  </div>
+  <div class="preview-list" id="preview-list">
+    <div class="preview-empty">Select layers on the canvas to begin</div>
+  </div>
 </div>
 
 <script>
-  function switchTab(id) {
-    document.querySelectorAll('.tab').forEach((t, i) => {
-      t.classList.toggle('active', ['fr','ps','an'][i] === id);
-    });
+  // ── Tab slider ──
+  function switchTab(id, idx) {
+    document.querySelectorAll('.tab').forEach((t, i) => t.classList.toggle('active', i === idx));
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
     document.getElementById('panel-' + id).classList.add('active');
+    moveSlider(idx);
   }
 
+  function moveSlider(idx) {
+    const tabs = document.querySelectorAll('.tab');
+    const slider = document.getElementById('tab-slider');
+    const tab = tabs[idx];
+    slider.style.left = tab.offsetLeft + 'px';
+    slider.style.width = tab.offsetWidth + 'px';
+  }
+
+  window.addEventListener('load', () => moveSlider(0));
+
+  // ── Selection ──
   window.onmessage = (event) => {
     const msg = event.data.pluginMessage;
     if (!msg || msg.type !== 'selection') return;
+
+    const badge = document.getElementById('sel-badge');
     document.getElementById('sel-count').textContent = msg.count;
+    document.getElementById('preview-count').textContent = msg.count;
+    badge.classList.toggle('has-sel', msg.count > 0);
+
     const list = document.getElementById('preview-list');
     if (msg.count === 0) {
-      list.innerHTML = '<div class="empty">No layers selected</div>';
+      list.innerHTML = '<div class="preview-empty">Select layers on the canvas to begin</div>';
     } else {
       list.innerHTML = msg.names.slice(0, 10).map(n =>
-        `<div class="preview-item">${n}</div>`
-      ).join('') + (msg.count > 10 ? `<div class="preview-item" style="color:#555">...and ${msg.count - 10} more</div>` : '');
+        `<div class="preview-item"><div class="preview-item-dot"></div><div class="preview-item-name">${n}</div></div>`
+      ).join('') + (msg.count > 10 ? `<div class="preview-more">+${msg.count - 10} more layers</div>` : '');
       document.getElementById('fr-find').value = msg.names[0];
     }
   };
 
+  // ── Actions ──
   function doFindReplace() {
     const find = document.getElementById('fr-find').value;
     if (!find) { alert('Please enter something to find.'); return; }
@@ -264,7 +511,7 @@
 
   function doAutoNumber() {
     const base = document.getElementById('an-base').value || 'Layer';
-    const sep = document.getElementById('an-sep').value;
+    const sep  = document.getElementById('an-sep').value;
     const start = document.getElementById('an-start').value || '1';
     parent.postMessage({ pluginMessage: { type: 'auto-number', base, sep, start }}, '*');
   }
