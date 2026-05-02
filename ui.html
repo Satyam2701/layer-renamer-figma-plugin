@@ -477,7 +477,7 @@
 
 <!-- Footer -->
 <div class="footer">
-  Made with ❤️ by <a href="https://www.linkedin.com/in/satyam-tiwari-965598153/" target="_blank">Satyam Tiwari</a>
+  Made with ❤️ by <a href="#" onclick="openLinkedIn(); return false;">Satyam Tiwari</a>
 </div>
 
 <script>
@@ -521,6 +521,10 @@
   };
 
   // ── Actions ──
+  function openLinkedIn() {
+    parent.postMessage({ pluginMessage: { type: 'open-url', url: 'https://www.linkedin.com/in/satyam-tiwari-965598153/' }}, '*');
+  }
+
   function doFindReplace() {
     const find = document.getElementById('fr-find').value;
     if (!find) { alert('Please enter something to find.'); return; }

@@ -48,6 +48,10 @@ figma.ui.onmessage = (msg: { type: string; [key: string]: unknown }) => {
     sendSelection();
   }
 
+  else if (msg.type === 'open-url') {
+    figma.openExternal(msg.url as string);
+  }
+
   else if (msg.type === 'close') {
     figma.closePlugin();
   }
