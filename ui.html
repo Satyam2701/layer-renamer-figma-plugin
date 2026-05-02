@@ -152,9 +152,9 @@
 </div>
 
 <div class="tabs">
-  <button class="tab active" onclick="switchTab('fr')">Find & Replace</button>
-  <button class="tab" onclick="switchTab('ps')">Prefix / Suffix</button>
-  <button class="tab" onclick="switchTab('an')">Auto Number</button>
+  <button class="tab active" onclick="switchTab('fr')">Find & Swap</button>
+  <button class="tab" onclick="switchTab('ps')">Add to Name</button>
+  <button class="tab" onclick="switchTab('an')">Number Layers</button>
 </div>
 
 <!-- Find & Replace -->
@@ -175,7 +175,7 @@
     <input type="checkbox" id="fr-case" />
     <label for="fr-case">Case sensitive</label>
   </div>
-  <button class="btn" onclick="doFindReplace()">Rename Layers</button>
+  <button class="btn" onclick="doFindReplace()">Swap Names</button>
 </div>
 
 <!-- Prefix / Suffix -->
@@ -192,7 +192,7 @@
   <input type="text" id="ps-prefix" placeholder="e.g. icon/" />
   <label>Add Suffix</label>
   <input type="text" id="ps-suffix" placeholder="e.g. _v2" />
-  <button class="btn" onclick="doPrefixSuffix()">Apply</button>
+  <button class="btn" onclick="doPrefixSuffix()">Add to Name</button>
 </div>
 
 <!-- Auto Number -->
@@ -211,7 +211,7 @@
   <input type="text" id="an-sep" placeholder="e.g. space or -" value=" " />
   <label>Start From</label>
   <input type="number" id="an-start" value="1" min="0" />
-  <button class="btn" onclick="doAutoNumber()">Number Layers</button>
+  <button class="btn" onclick="doAutoNumber()">Number My Layers</button>
 </div>
 
 <!-- Layer Preview -->
