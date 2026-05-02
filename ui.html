@@ -7,16 +7,16 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg:        #0a0a0a;
-    --surface:   #141414;
-    --surface2:  #1f1f1f;
-    --border:    rgba(255,255,255,0.07);
-    --border2:   rgba(255,255,255,0.13);
-    --accent:    #ffffff;
-    --accent2:   #cccccc;
-    --text1:     #f5f5f5;
-    --text2:     #888888;
-    --text3:     #444444;
+    --bg:        #f5f5f5;
+    --surface:   #ebebeb;
+    --surface2:  #e0e0e0;
+    --border:    rgba(0,0,0,0.08);
+    --border2:   rgba(0,0,0,0.13);
+    --accent:    #000000;
+    --accent2:   #333333;
+    --text1:     #111111;
+    --text2:     #666666;
+    --text3:     #aaaaaa;
   }
 
   body {
@@ -38,7 +38,7 @@
     top: -40px; left: 50%;
     transform: translateX(-50%);
     width: 260px; height: 100px;
-    background: radial-gradient(ellipse, rgba(255,255,255,0.04) 0%, transparent 70%);
+    background: radial-gradient(ellipse, rgba(0,0,0,0.03) 0%, transparent 70%);
     pointer-events: none;
   }
   .header-top {
@@ -54,10 +54,10 @@
   }
   .logo-icon {
     width: 28px; height: 28px;
-    background: #ffffff;
+    background: #111111;
     border-radius: 8px;
     display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 2px 8px rgba(255,255,255,0.12);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
   }
   .logo-name {
     font-size: 13px;
@@ -80,14 +80,14 @@
     color: var(--text2);
     transition: all 0.2s;
   }
-  .sel-badge.has-sel { border-color: rgba(255,255,255,0.25); color: var(--text1); }
+  .sel-badge.has-sel { border-color: rgba(0,0,0,0.25); color: var(--text1); }
   .sel-dot {
     width: 6px; height: 6px;
     border-radius: 50%;
     background: var(--text3);
     transition: background 0.2s;
   }
-  .sel-badge.has-sel .sel-dot { background: #fff; box-shadow: 0 0 6px rgba(255,255,255,0.6); }
+  .sel-badge.has-sel .sel-dot { background: #111; box-shadow: 0 0 6px rgba(0,0,0,0.25); }
 
   /* ── Divider ── */
   .divider { height: 1px; background: var(--border); margin: 0 14px; }
@@ -119,13 +119,13 @@
     z-index: 1;
   }
   .tab:hover { color: var(--text2); }
-  .tab.active { color: #000; }
+  .tab.active { color: #ffffff; }
   .tab-slider {
     position: absolute;
     top: 3px; bottom: 3px;
-    background: #ffffff;
+    background: #111111;
     border-radius: 7px;
-    box-shadow: 0 2px 10px rgba(255,255,255,0.1);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
     transition: left 0.22s cubic-bezier(0.4,0,0.2,1), width 0.22s cubic-bezier(0.4,0,0.2,1);
     pointer-events: none;
   }
@@ -138,33 +138,33 @@
   .info {
     display: flex;
     gap: 9px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.09);
+    background: rgba(0,0,0,0.04);
+    border: 1px solid rgba(0,0,0,0.08);
     border-radius: 10px;
     padding: 10px 12px;
     margin-bottom: 14px;
   }
-  .info-icon { flex-shrink: 0; opacity: 0.5; margin-top: 1px; }
+  .info-icon { flex-shrink: 0; opacity: 0.4; margin-top: 1px; }
   .info-body { }
   .info-title {
     font-size: 11px;
     font-weight: 600;
-    color: #cccccc;
+    color: #222222;
     margin-bottom: 3px;
   }
   .info-desc {
     font-size: 11px;
-    color: #666666;
+    color: #777777;
     line-height: 1.55;
   }
   .info-eg {
     display: inline-block;
     margin-top: 5px;
-    background: rgba(255,255,255,0.05);
+    background: rgba(0,0,0,0.06);
     border-radius: 4px;
     padding: 2px 6px;
     font-size: 10px;
-    color: #555555;
+    color: #888888;
     font-style: italic;
   }
 
@@ -193,8 +193,8 @@
   }
   input::placeholder { color: var(--text3); }
   input:focus {
-    border-color: rgba(255,255,255,0.4);
-    box-shadow: 0 0 0 3px rgba(255,255,255,0.06);
+    border-color: rgba(0,0,0,0.4);
+    box-shadow: 0 0 0 3px rgba(0,0,0,0.06);
   }
   .row { display: flex; gap: 8px; }
   .row .field { flex: 1; }
@@ -217,10 +217,10 @@
     transition: all 0.15s;
   }
   .check-row input:checked ~ .check-box {
-    background: #ffffff;
-    border-color: #ffffff;
+    background: #111111;
+    border-color: #111111;
   }
-  .check-row input:checked ~ .check-box svg { stroke: #000; }
+  .check-row input:checked ~ .check-box svg { stroke: #fff; }
   .check-mark { display: none; }
   .check-row input:checked ~ .check-box .check-mark { display: block; }
   .check-label { font-size: 11px; color: var(--text2); }
@@ -232,23 +232,23 @@
     padding: 10px;
     border: none;
     border-radius: 10px;
-    background: #ffffff;
-    color: #000000;
+    background: #111111;
+    color: #ffffff;
     font-size: 13px;
     font-weight: 700;
     font-family: inherit;
     letter-spacing: 0.1px;
     cursor: pointer;
-    box-shadow: 0 2px 12px rgba(255,255,255,0.1);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.15);
     transition: transform 0.12s, box-shadow 0.12s, opacity 0.12s;
     margin-bottom: 14px;
   }
   .btn:hover {
     transform: translateY(-1px);
-    box-shadow: 0 4px 18px rgba(255,255,255,0.18);
-    opacity: 0.92;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.22);
+    opacity: 0.88;
   }
-  .btn:active { transform: scale(0.98); opacity: 0.85; }
+  .btn:active { transform: scale(0.98); opacity: 0.8; }
 
   /* ── Preview ── */
   .preview-wrap {
@@ -299,8 +299,8 @@
   .preview-item-dot {
     width: 5px; height: 5px;
     border-radius: 50%;
-    background: #ffffff;
-    opacity: 0.2;
+    background: #111111;
+    opacity: 0.25;
     flex-shrink: 0;
   }
   .preview-item-name {
@@ -332,7 +332,7 @@
   <div class="header-top">
     <div class="logo">
       <div class="logo-icon">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round"><path d="M4 6h16M4 12h10M4 18h6"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M4 6h16M4 12h10M4 18h6"/></svg>
       </div>
       <div class="logo-name">Layer <span>Renamer</span></div>
     </div>
@@ -359,7 +359,7 @@
 <div id="panel-fr" class="panel active">
   <div class="info">
     <div class="info-icon">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><circle cx="12" cy="16" r="0.5" fill="#888"/></svg>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><circle cx="12" cy="16" r="0.5" fill="#555"/></svg>
     </div>
     <div class="info-body">
       <div class="info-title">When to use this?</div>
@@ -390,7 +390,7 @@
 <div id="panel-ps" class="panel">
   <div class="info">
     <div class="info-icon">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><circle cx="12" cy="16" r="0.5" fill="#888"/></svg>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><circle cx="12" cy="16" r="0.5" fill="#555"/></svg>
     </div>
     <div class="info-body">
       <div class="info-title">When to use this?</div>
@@ -414,7 +414,7 @@
 <div id="panel-an" class="panel">
   <div class="info">
     <div class="info-icon">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><circle cx="12" cy="16" r="0.5" fill="#888"/></svg>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><circle cx="12" cy="16" r="0.5" fill="#555"/></svg>
     </div>
     <div class="info-body">
       <div class="info-title">When to use this?</div>
