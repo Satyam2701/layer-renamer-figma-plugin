@@ -128,6 +128,20 @@
   }
   .preview-item::before { content: "▸ "; color: #5b4fcf; }
   .empty { color: #555; font-style: italic; font-size: 11px; text-align: center; padding: 8px; }
+
+  .info {
+    display: flex;
+    gap: 8px;
+    background: #1a2340;
+    border: 1px solid #2a3a6a;
+    border-radius: 8px;
+    padding: 9px 10px;
+    margin-bottom: 12px;
+  }
+  .info-icon { flex-shrink: 0; margin-top: 1px; }
+  .info-text { font-size: 11px; color: #8ab0f0; line-height: 1.6; }
+  .info-text strong { color: #a8c8ff; display: block; margin-bottom: 2px; }
+  .info-example { color: #6080b0; font-size: 10px; margin-top: 4px; }
 </style>
 </head>
 <body>
@@ -145,6 +159,14 @@
 
 <!-- Find & Replace -->
 <div id="panel-fr" class="panel active">
+  <div class="info">
+    <div class="info-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8ab0f0" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+    <div class="info-text">
+      <strong>When to use this?</strong>
+      Use when you want to rename many layers at once by swapping a word or phrase.
+      <div class="info-example">e.g. All your layers say "Frame" → replace with "Screen" in one click.</div>
+    </div>
+  </div>
   <label>Find</label>
   <input type="text" id="fr-find" placeholder="e.g. Frame" />
   <label>Replace with</label>
@@ -158,6 +180,14 @@
 
 <!-- Prefix / Suffix -->
 <div id="panel-ps" class="panel">
+  <div class="info">
+    <div class="info-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8ab0f0" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+    <div class="info-text">
+      <strong>When to use this?</strong>
+      Use when you want to add the same text to the start or end of multiple layer names.
+      <div class="info-example">e.g. Add prefix "icon/" → "home" becomes "icon/home". Add suffix " v2" → "Button" becomes "Button v2".</div>
+    </div>
+  </div>
   <label>Add Prefix</label>
   <input type="text" id="ps-prefix" placeholder="e.g. icon/" />
   <label>Add Suffix</label>
@@ -167,6 +197,14 @@
 
 <!-- Auto Number -->
 <div id="panel-an" class="panel">
+  <div class="info">
+    <div class="info-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8ab0f0" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+    <div class="info-text">
+      <strong>When to use this?</strong>
+      Use when you want to give layers a clean numbered sequence automatically.
+      <div class="info-example">e.g. Select 5 frames → they become "Screen 1", "Screen 2", "Screen 3"... instantly.</div>
+    </div>
+  </div>
   <label>Base Name</label>
   <input type="text" id="an-base" placeholder="e.g. Layer" value="Layer" />
   <label>Separator</label>
