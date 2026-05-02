@@ -330,10 +330,16 @@
 
   /* ── Footer ── */
   .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
     text-align: center;
-    padding: 10px 14px 14px;
+    padding: 8px 14px;
     font-size: 11px;
     color: var(--text3);
+    background: var(--bg);
+    border-top: 1px solid var(--border);
   }
   .footer a {
     color: var(--text2);
@@ -465,7 +471,7 @@
 </div>
 
 <!-- Preview -->
-<div class="preview-wrap" style="margin-bottom:0; border-bottom-left-radius:0; border-bottom-right-radius:0;">
+<div class="preview-wrap" style="margin-bottom:36px;">
   <div class="preview-header">
     <div class="preview-title">Selected Layers</div>
     <div class="preview-count" id="preview-count">0</div>
