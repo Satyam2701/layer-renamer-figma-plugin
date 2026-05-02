@@ -202,6 +202,7 @@
       list.innerHTML = msg.names.slice(0, 10).map(n =>
         `<div class="preview-item">${n}</div>`
       ).join('') + (msg.count > 10 ? `<div class="preview-item" style="color:#555">...and ${msg.count - 10} more</div>` : '');
+      document.getElementById('fr-find').value = msg.names[0];
     }
   };
 
