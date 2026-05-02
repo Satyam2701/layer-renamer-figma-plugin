@@ -327,6 +327,25 @@
     padding: 3px 8px;
     font-style: italic;
   }
+
+  /* ── Footer ── */
+  .footer {
+    text-align: center;
+    padding: 10px 14px 14px;
+    font-size: 11px;
+    color: var(--text3);
+  }
+  .footer a {
+    color: var(--text2);
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(0,0,0,0.15);
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .footer a:hover {
+    color: var(--text1);
+    border-bottom-color: var(--text1);
+  }
 </style>
 </head>
 <body>
@@ -446,7 +465,7 @@
 </div>
 
 <!-- Preview -->
-<div class="preview-wrap">
+<div class="preview-wrap" style="margin-bottom:0; border-bottom-left-radius:0; border-bottom-right-radius:0;">
   <div class="preview-header">
     <div class="preview-title">Selected Layers</div>
     <div class="preview-count" id="preview-count">0</div>
@@ -454,6 +473,11 @@
   <div class="preview-list" id="preview-list">
     <div class="preview-empty">Select layers on the canvas to begin</div>
   </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  Made with ❤️ by <a href="https://www.linkedin.com/in/satyam-tiwari-965598153/" target="_blank">Satyam Tiwari</a>
 </div>
 
 <script>
