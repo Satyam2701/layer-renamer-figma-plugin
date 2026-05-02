@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 12px;
+    background: #2c2c2c;
+    color: #e0e0e0;
+    padding: 12px;
+    user-select: none;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #3a3a3a;
+    border: 1px solid #444;
+    border-radius: 6px;
+    padding: 6px 10px;
+    margin-bottom: 12px;
+    width: 100%;
+    font-size: 11px;
+    color: #aaa;
+  }
+  .badge span { color: #a78bfa; font-weight: 600; }
+
+  .tabs {
+    display: flex;
+    background: #1e1e1e;
+    border-radius: 8px;
+    padding: 3px;
+    margin-bottom: 14px;
+    gap: 2px;
+  }
+  .tab {
+    flex: 1;
+    padding: 6px 4px;
+    border: none;
+    background: transparent;
+    color: #888;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 500;
+    transition: all 0.15s;
+  }
+  .tab.active {
+    background: #3d2fa0;
+    color: #fff;
+  }
+
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  label {
+    display: block;
+    font-size: 11px;
+    color: #888;
+    margin-bottom: 4px;
+    margin-top: 10px;
+  }
+  label:first-child { margin-top: 0; }
+
+  input[type="text"], input[type="number"] {
+    width: 100%;
+    padding: 7px 10px;
+    background: #1e1e1e;
+    border: 1px solid #444;
+    border-radius: 6px;
+    color: #e0e0e0;
+    font-size: 12px;
+    outline: none;
+    transition: border 0.15s;
+  }
+  input:focus { border-color: #7c6ff7; }
+
+  .row { display: flex; gap: 8px; }
+  .row input { flex: 1; }
+
+  .checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+  }
+  .checkbox-row input[type="checkbox"] { accent-color: #7c6ff7; }
+  .checkbox-row label { margin: 0; color: #aaa; }
+
+  .btn {
+    display: block;
+    width: 100%;
+    padding: 9px;
+    margin-top: 14px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #5b4fcf, #7c6ff7);
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.1s;
+  }
+  .btn:hover { opacity: 0.9; }
+  .btn:active { transform: scale(0.98); }
+
+  .preview {
+    margin-top: 12px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 8px;
+    max-height: 90px;
+    overflow-y: auto;
+  }
+  .preview-title { font-size: 10px; color: #666; margin-bottom: 4px; }
+  .preview-item {
+    font-size: 11px;
+    color: #aaa;
+    padding: 2px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .preview-item::before { content: "▸ "; color: #5b4fcf; }
+  .empty { color: #555; font-style: italic; font-size: 11px; text-align: center; padding: 8px; }
+</style>
+</head>
+<body>
+
+<div class="badge">
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+  <span id="sel-count">0</span> layers selected
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('fr')">Find & Replace</button>
+  <button class="tab" onclick="switchTab('ps')">Prefix / Suffix</button>
+  <button class="tab" onclick="switchTab('an')">Auto Number</button>
+</div>
+
+<!-- Find & Replace -->
+<div id="panel-fr" class="panel active">
+  <label>Find</label>
+  <input type="text" id="fr-find" placeholder="e.g. Frame" />
+  <label>Replace with</label>
+  <input type="text" id="fr-replace" placeholder="e.g. Section" />
+  <div class="checkbox-row">
+    <input type="checkbox" id="fr-case" />
+    <label for="fr-case">Case sensitive</label>
+  </div>
+  <button class="btn" onclick="doFindReplace()">Rename Layers</button>
+</div>
+
+<!-- Prefix / Suffix -->
+<div id="panel-ps" class="panel">
+  <label>Add Prefix</label>
+  <input type="text" id="ps-prefix" placeholder="e.g. icon/" />
+  <label>Add Suffix</label>
+  <input type="text" id="ps-suffix" placeholder="e.g. _v2" />
+  <button class="btn" onclick="doPrefixSuffix()">Apply</button>
+</div>
+
+<!-- Auto Number -->
+<div id="panel-an" class="panel">
+  <label>Base Name</label>
+  <input type="text" id="an-base" placeholder="e.g. Layer" value="Layer" />
+  <label>Separator</label>
+  <input type="text" id="an-sep" placeholder="e.g. space or -" value=" " />
+  <label>Start From</label>
+  <input type="number" id="an-start" value="1" min="0" />
+  <button class="btn" onclick="doAutoNumber()">Number Layers</button>
+</div>
+
+<!-- Layer Preview -->
+<div class="preview">
+  <div class="preview-title">SELECTED LAYERS</div>
+  <div id="preview-list"><div class="empty">No layers selected</div></div>
+</div>
+
+<script>
+  function switchTab(id) {
+    document.querySelectorAll('.tab').forEach((t, i) => {
+      t.classList.toggle('active', ['fr','ps','an'][i] === id);
+    });
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-' + id).classList.add('active');
+  }
+
+  window.onmessage = (event) => {
+    const msg = event.data.pluginMessage;
+    if (!msg || msg.type !== 'selection') return;
+    document.getElementById('sel-count').textContent = msg.count;
+    const list = document.getElementById('preview-list');
+    if (msg.count === 0) {
+      list.innerHTML = '<div class="empty">No layers selected</div>';
+    } else {
+      list.innerHTML = msg.names.slice(0, 10).map(n =>
+        `<div class="preview-item">${n}</div>`
+      ).join('') + (msg.count > 10 ? `<div class="preview-item" style="color:#555">...and ${msg.count - 10} more</div>` : '');
+    }
+  };
+
+  function doFindReplace() {
+    const find = document.getElementById('fr-find').value;
+    if (!find) { alert('Please enter something to find.'); return; }
+    parent.postMessage({ pluginMessage: {
+      type: 'find-replace',
+      find,
+      replace: document.getElementById('fr-replace').value,
+      caseSensitive: document.getElementById('fr-case').checked
+    }}, '*');
+  }
+
+  function doPrefixSuffix() {
+    const prefix = document.getElementById('ps-prefix').value;
+    const suffix = document.getElementById('ps-suffix').value;
+    if (!prefix && !suffix) { alert('Enter a prefix or suffix.'); return; }
+    parent.postMessage({ pluginMessage: { type: 'prefix-suffix', prefix, suffix }}, '*');
+  }
+
+  function doAutoNumber() {
+    const base = document.getElementById('an-base').value || 'Layer';
+    const sep = document.getElementById('an-sep').value;
+    const start = document.getElementById('an-start').value || '1';
+    parent.postMessage({ pluginMessage: { type: 'auto-number', base, sep, start }}, '*');
+  }
+</script>
+</body>
+</html>
